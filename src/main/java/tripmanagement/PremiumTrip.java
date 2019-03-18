@@ -8,13 +8,13 @@ public class PremiumTrip extends Trip {
     @Override
     public boolean addTraveler(Traveler traveler) {
         if (traveler.isVip()) {
-            return travelerList.add(traveler);
+            return travelerSet.add(traveler);
         }
         return false;
     }
 
     @Override
     public boolean removeTraveler(Traveler traveler) {
-        return travelerList.remove(traveler);
+        return travelerSet.remove(traveler);
     }
 }

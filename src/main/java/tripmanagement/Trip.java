@@ -1,13 +1,11 @@
 package tripmanagement;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public abstract class Trip {
 
     protected String id;
-    protected List<Traveler> travelerList = new ArrayList<>();
+    protected Set<Traveler> travelerSet = new HashSet<>();
 
     public Trip(String id) {
         this.id = id;
@@ -17,8 +15,8 @@ public abstract class Trip {
         return id;
     }
 
-    public List<Traveler> getTravelerList() {
-        return Collections.unmodifiableList(travelerList);
+    public Set<Traveler> getTravelerSet() {
+        return Collections.unmodifiableSet(travelerSet);
     }
 
     public abstract boolean addTraveler(Traveler traveler);

@@ -8,13 +8,13 @@ public class EconomyTrip extends Trip {
 
     @Override
     public boolean addTraveler(Traveler traveler) {
-        return travelerList.add(traveler);
+        return travelerSet.add(traveler);
     }
 
     @Override
     public boolean removeTraveler(Traveler traveler) {
         if (!traveler.isVip()) {
-            return travelerList.remove(traveler);
+            return travelerSet.remove(traveler);
         }
         return false;
     }

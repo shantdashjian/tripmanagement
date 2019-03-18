@@ -1,9 +1,6 @@
 package tripmanagement;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,13 +27,24 @@ public class StationTest {
                 Trip economyTrip = new EconomyTrip("1");
 
                 assertEquals(true, economyTrip.addTraveler(mike));
-                assertEquals(1, economyTrip.getTravelerList().size());
+                assertEquals(1, economyTrip.getTravelerSet().size());
                 assertEquals(true, economyTrip.removeTraveler(mike));
-                assertEquals(0, economyTrip.getTravelerList().size());
+                assertEquals(0, economyTrip.getTravelerSet().size());
                 assertEquals("1", economyTrip.getId());
                 assertEquals("Mike", mike.getName());
+            }
 
+            @DisplayName("Then he can only be added once")
+            @RepeatedTest(5)
+            public void testEconomyTripUsualTravelerOnce(RepetitionInfo repetitionInfo) {
 
+                Trip economyTrip = new EconomyTrip("1");
+
+                for (int i = 0; i < repetitionInfo.getCurrentRepetition(); i++) {
+                    economyTrip.addTraveler(mike);
+                }
+                assertEquals(true, economyTrip.getTravelerSet().contains(mike));
+                assertEquals(1, economyTrip.getTravelerSet().size());
             }
         }
 
@@ -51,9 +59,9 @@ public class StationTest {
                 Trip businessTrip = new BusinessTrip("2");
 
                 assertEquals(false, businessTrip.addTraveler(mike));
-                assertEquals(0, businessTrip.getTravelerList().size());
+                assertEquals(0, businessTrip.getTravelerSet().size());
                 assertEquals(false, businessTrip.removeTraveler(mike));
-                assertEquals(0, businessTrip.getTravelerList().size());
+                assertEquals(0, businessTrip.getTravelerSet().size());
 
             }
         }
@@ -69,9 +77,9 @@ public class StationTest {
                 Trip premiumTrip = new PremiumTrip("3");
 
                 assertEquals(false, premiumTrip.addTraveler(mike));
-                assertEquals(0, premiumTrip.getTravelerList().size());
+                assertEquals(0, premiumTrip.getTravelerSet().size());
                 assertEquals(false, premiumTrip.removeTraveler(mike));
-                assertEquals(0, premiumTrip.getTravelerList().size());
+                assertEquals(0, premiumTrip.getTravelerSet().size());
 
             }
         }
@@ -98,9 +106,9 @@ public class StationTest {
                 Trip economyTrip = new EconomyTrip("1");
 
                 assertEquals(true, economyTrip.addTraveler(john));
-                assertEquals(1, economyTrip.getTravelerList().size());
+                assertEquals(1, economyTrip.getTravelerSet().size());
                 assertEquals(false, economyTrip.removeTraveler(john));
-                assertEquals(1, economyTrip.getTravelerList().size());
+                assertEquals(1, economyTrip.getTravelerSet().size());
 
             }
         }
@@ -116,9 +124,9 @@ public class StationTest {
                 Trip businessTrip = new BusinessTrip("2");
 
                 assertEquals(true, businessTrip.addTraveler(john));
-                assertEquals(1, businessTrip.getTravelerList().size());
+                assertEquals(1, businessTrip.getTravelerSet().size());
                 assertEquals(false, businessTrip.removeTraveler(john));
-                assertEquals(1, businessTrip.getTravelerList().size());
+                assertEquals(1, businessTrip.getTravelerSet().size());
 
             }
         }
@@ -134,9 +142,9 @@ public class StationTest {
                 Trip premiumTrip = new PremiumTrip("3");
 
                 assertEquals(true, premiumTrip.addTraveler(john));
-                assertEquals(1, premiumTrip.getTravelerList().size());
+                assertEquals(1, premiumTrip.getTravelerSet().size());
                 assertEquals(true, premiumTrip.removeTraveler(john));
-                assertEquals(0, premiumTrip.getTravelerList().size());
+                assertEquals(0, premiumTrip.getTravelerSet().size());
 
             }
         }

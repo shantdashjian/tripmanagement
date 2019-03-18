@@ -9,7 +9,7 @@ public class BusinessTrip extends Trip {
     @Override
     public boolean addTraveler(Traveler traveler) {
         if (traveler.isVip()) {
-            return travelerList.add(traveler);
+            return travelerSet.add(traveler);
         }
         return false;
     }
