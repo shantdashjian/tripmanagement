@@ -1,64 +1,144 @@
 package tripmanagement;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StationTest {
 
-    @Test
-    public void testUsualTravelerEconomyTrip() {
+    @Nested
+    @DisplayName("Given there is a usual traveler")
+    class UsualTravelerTest {
+        private Traveler mike;
 
-        Trip economyTrip = new EconomyTrip("1");
+        @BeforeEach
+        void setup() {
+            mike = new Traveler("Mike", false);
+        }
 
-        Traveler mike = new Traveler("Mike", false);
+        @DisplayName("When he takes an economy trip")
+        @Nested
+        class EconomyTripTest {
 
-        assertEquals(true, economyTrip.addTraveler(mike));
-        assertEquals(1, economyTrip.getTravelerList().size());
-        assertEquals(true, economyTrip.removeTraveler(mike));
-        assertEquals(0, economyTrip.getTravelerList().size());
-        assertEquals("1", economyTrip.getId());
-        assertEquals("Mike", mike.getName());
+            @Test
+            @DisplayName("Then he can be added and removed")
+            public void testEconomyTrip() {
+
+                Trip economyTrip = new EconomyTrip("1");
+
+                assertEquals(true, economyTrip.addTraveler(mike));
+                assertEquals(1, economyTrip.getTravelerList().size());
+                assertEquals(true, economyTrip.removeTraveler(mike));
+                assertEquals(0, economyTrip.getTravelerList().size());
+                assertEquals("1", economyTrip.getId());
+                assertEquals("Mike", mike.getName());
 
 
+            }
+        }
+
+        @Nested
+        @DisplayName("When he takes a business trip")
+        class BusinessTripTest {
+
+            @Test
+            @DisplayName("Then he cannot be added nor removed")
+            public void testBusinessTrip() {
+
+                Trip businessTrip = new BusinessTrip("2");
+
+                assertEquals(false, businessTrip.addTraveler(mike));
+                assertEquals(0, businessTrip.getTravelerList().size());
+                assertEquals(false, businessTrip.removeTraveler(mike));
+                assertEquals(0, businessTrip.getTravelerList().size());
+
+            }
+        }
+
+        @Nested
+        @DisplayName("When he takes a premium trip")
+        class PremiumTripTest {
+
+            @Test
+            @DisplayName("Then he cannot be added nor removed")
+            public void testPremiumTrip() {
+
+                Trip premiumTrip = new PremiumTrip("3");
+
+                assertEquals(false, premiumTrip.addTraveler(mike));
+                assertEquals(0, premiumTrip.getTravelerList().size());
+                assertEquals(false, premiumTrip.removeTraveler(mike));
+                assertEquals(0, premiumTrip.getTravelerList().size());
+
+            }
+        }
     }
-    @Test
-    public void testUsualTravelerBusinessTrip() {
 
-        Trip businessTrip = new BusinessTrip("2");
+    @Nested
+    @DisplayName("Given there is a VIP traveler")
+    class VIPTravelerTest {
+        private Traveler john;
 
-        Traveler mike = new Traveler("Mike", false);
+        @BeforeEach
+        void setup() {
+            john = new Traveler("John", true);
+        }
 
-        assertEquals(false, businessTrip.addTraveler(mike));
-        assertEquals(0, businessTrip.getTravelerList().size());
-        assertEquals(false, businessTrip.removeTraveler(mike));
-        assertEquals(0, businessTrip.getTravelerList().size());
+        @Nested
+        @DisplayName("When he takes an economy trip")
+        class EconomyTripTest {
 
-    }
-    @Test
-    public void testVIPTravelerEconomyTrip() {
+            @Test
+            @DisplayName("Then he cannot be added but not removed")
+            public void testEconomyTrip() {
 
-        Trip economyTrip = new EconomyTrip("1");
+                Trip economyTrip = new EconomyTrip("1");
 
-        Traveler john = new Traveler("John", true);
+                assertEquals(true, economyTrip.addTraveler(john));
+                assertEquals(1, economyTrip.getTravelerList().size());
+                assertEquals(false, economyTrip.removeTraveler(john));
+                assertEquals(1, economyTrip.getTravelerList().size());
 
-        assertEquals(true, economyTrip.addTraveler(john));
-        assertEquals(1, economyTrip.getTravelerList().size());
-        assertEquals(false, economyTrip.removeTraveler(john));
-        assertEquals(1, economyTrip.getTravelerList().size());
+            }
+        }
 
-    }
-    @Test
-    public void testVIPTravelerBusinessTrip() {
+        @Nested
+        @DisplayName("When he takes a business trip")
+        class BusinessTripTest {
 
-        Trip businessTrip = new BusinessTrip("2");
+            @Test
+            @DisplayName("Then he can be added but not removed")
+            public void testBusinessTrip() {
 
-        Traveler john = new Traveler("John", true);
+                Trip businessTrip = new BusinessTrip("2");
 
-        assertEquals(true, businessTrip.addTraveler(john));
-        assertEquals(1, businessTrip.getTravelerList().size());
-        assertEquals(false, businessTrip.removeTraveler(john));
-        assertEquals(1, businessTrip.getTravelerList().size());
+                assertEquals(true, businessTrip.addTraveler(john));
+                assertEquals(1, businessTrip.getTravelerList().size());
+                assertEquals(false, businessTrip.removeTraveler(john));
+                assertEquals(1, businessTrip.getTravelerList().size());
 
+            }
+        }
+
+        @Nested
+        @DisplayName("When he takes a premium trip")
+        class PremiumTripTest {
+
+            @Test
+            @DisplayName("Then he can be added and removed")
+            public void testPremiumTrip() {
+
+                Trip premiumTrip = new PremiumTrip("3");
+
+                assertEquals(true, premiumTrip.addTraveler(john));
+                assertEquals(1, premiumTrip.getTravelerList().size());
+                assertEquals(true, premiumTrip.removeTraveler(john));
+                assertEquals(0, premiumTrip.getTravelerList().size());
+
+            }
+        }
     }
 }
