@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Trip {
+public abstract class Trip {
 
-    private String id;
-    private List<Traveler> travelerList = new ArrayList<>();
-    private String tripType;
+    protected String id;
+    protected List<Traveler> travelerList = new ArrayList<>();
 
-    public Trip(String id, String tripType) {
+    public Trip(String id) {
         this.id = id;
-        this.tripType = tripType;
     }
 
     public String getId() {
@@ -23,36 +21,7 @@ public class Trip {
         return Collections.unmodifiableList(travelerList);
     }
 
-    public String getTripType() {
-        return tripType;
-    }
+    public abstract boolean addTraveler(Traveler traveler);
 
-    public boolean addTraveler(Traveler traveler) {
-        switch (tripType) {
-            case "Economy":
-                return travelerList.add(traveler);
-            case "Business":
-                if (traveler.isVip()) {
-                    return travelerList.add(traveler);
-                }
-                return false;
-            default:
-                throw new RuntimeException("Unknown type:" + tripType);
-        }
-    }
-
-    public boolean removeTraveler(Traveler traveler) {
-        switch (tripType) {
-            case "Economy":
-                if (traveler.isVip()) {
-                    return travelerList.remove(traveler);
-                }
-                return false;
-            case "Business":
-                return false;
-            default:
-                throw new RuntimeException("Unknown type:" + tripType);
-        }
-
-    }
+    public abstract boolean removeTraveler(Traveler traveler);
 }
